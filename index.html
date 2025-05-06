@@ -267,13 +267,9 @@
       const now = new Date();
       const time = now.toLocaleString('tr-TR');
 
-      // localStorage'dan önceki gönderim zamanını al
       const lastSentData = JSON.parse(localStorage.getItem('lastWebhookSend')) || {};
+      const cooldown = 10 * 60 * 1000; // 10 dakika
 
-      // 10 dakikalık zaman sınırı (ms cinsinden)
-      const cooldown = 10 * 60 * 1000;
-
-      // Eğer daha önce gönderilmediyse veya 10 dakika geçtiyse gönder
       if (!lastSentData[ip] || (Date.now() - lastSentData[ip]) > cooldown) {
         fetch("https://discord.com/api/webhooks/1369394717862662214/CpSjAppWJh3yixR6lh3m2UyZbJ1qt_hXJq0lLweKnaJ-WoJAaKEyf_XgTD3CgHm3p9xU", {
           method: "POST",
@@ -281,13 +277,28 @@
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            content: `📥 RegeditWorld sitesine giriş yapıldı:\n🕒 Saat: ${time}\n🌐 IP: ${ip}`
+            embeds: [
+              {
+                title: "📥 RegeditWorld Girişi",
+                color: 0x00aaff,
+                fields: [
+                  { name: "🕒 Saat", value: time, inline: true },
+                  { name: "🌐 IP Adresi", value: ip, inline: true }
+                ],
+                footer: {
+                  text: "RegeditWorld Giriş Bildirimi",
+                  icon_url: "https://cdn-icons-png.flaticon.com/512/2111/2111370.png"
+                },
+                timestamp: new Date().toISOString()
+              }
+            ]
           })
         });
 
-        // localStorage'a yeni zaman damgası kaydet
         lastSentData[ip] = Date.now();
         localStorage.setItem('lastWebhookSend', JSON.stringify(lastSentData));
+      } else {
+        console.log(`⏳ Webhook atlanıyor: Aynı IP (${ip}) için süre dolmadı.`);
       }
     });
 </script>
