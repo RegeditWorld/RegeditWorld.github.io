@@ -283,9 +283,7 @@
                 color: 0x00aaff,
                 fields: [
                   { name: "🕒 TARIH", value: time, inline: true },
-                  { name: "🌐 IP", value: ip, inline: true },
-                  { name: "🧠 Tarayıcı", value: navigator.userAgent, inline: false },
-                  { name: "📱 Cihaz", value: `${window.innerWidth}x${window.innerHeight}`, inline: false }
+                  { name: "🌐 IP", value: ip, inline: true }
                 ],
                 footer: {
                   text: "RegeditWorld",
@@ -296,6 +294,15 @@
             ]
           })
         });
+
+        lastSentData[ip] = Date.now();
+        localStorage.setItem('lastWebhookSend', JSON.stringify(lastSentData));
+      } else {
+        console.log(⏳ Webhook atlanıyor: Aynı IP (${ip}) için süre dolmadı.);
+      }
+    });
+</script>
+
 
         lastSentData[ip] = Date.now();
         localStorage.setItem('lastWebhookSend', JSON.stringify(lastSentData));
