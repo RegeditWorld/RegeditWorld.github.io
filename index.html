@@ -4,12 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RegeditWorld</title>
+  <link rel="icon" type="image/png" href="acd4ac5a-c8dc-4992-94f9-d2df03293bad.png" />
   <style>
     :root {
       --bg-color: #0e0e0e;
       --text-color: #fff;
       --accent: #66ccff;
-      --secondary-text: #ddd;
+      --secondary-text: #ccc;
     }
 
     [data-theme="light"] {
@@ -38,7 +39,7 @@
       font-size: 2.5rem;
       animation: rgb 10s linear infinite;
       font-weight: bold;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+      text-shadow: 0 0 15px rgba(102, 204, 255, 0.4);
     }
 
     @keyframes rgb {
@@ -50,7 +51,6 @@
     }
 
     p {
-      margin: 8px 0;
       font-size: 1.1rem;
       color: var(--secondary-text);
     }
@@ -72,24 +72,17 @@
       text-decoration: none;
       border-radius: 8px;
       font-weight: bold;
-      transition: all 0.3s ease;
-    }
-
-    .download a:hover {
-      background: #00ffaa;
-      transform: scale(1.05);
     }
 
     .theme-toggle {
       position: fixed;
       top: 20px;
       right: 20px;
-      z-index: 10000;
       font-size: 24px;
       background: none;
       border: none;
-      cursor: pointer;
       color: var(--text-color);
+      cursor: pointer;
     }
 
     .social-icons {
@@ -114,25 +107,39 @@
     }
 
     .faq {
-      margin-top: 60px;
+      margin-top: 40px;
       background: rgba(255, 255, 255, 0.05);
-      padding: 20px;
       border-radius: 10px;
+      overflow: hidden;
     }
 
-    .faq h2 {
-      font-size: 1.8rem;
-      margin-bottom: 16px;
+    .faq-header {
+      padding: 15px 20px;
+      cursor: pointer;
+      font-weight: bold;
+      background-color: rgba(255,255,255,0.1);
+    }
+
+    .faq-content {
+      max-height: 0;
+      overflow: hidden;
+      padding: 0 20px;
+      transition: max-height 0.5s ease;
+    }
+
+    .faq-content.open {
+      max-height: 500px;
+      padding-bottom: 20px;
     }
 
     .faq-item {
-      margin-bottom: 15px;
+      margin-top: 15px;
     }
 
     .faq-item strong {
-      display: block;
-      font-size: 1.1rem;
       color: var(--accent);
+      display: block;
+      margin-bottom: 4px;
     }
 
     footer {
@@ -140,6 +147,22 @@
       margin-top: 30px;
       color: #666;
       font-size: 0.9rem;
+    }
+
+    .particle {
+      position: fixed;
+      top: -10px;
+      font-size: 20px;
+      user-select: none;
+      pointer-events: none;
+      z-index: 1000;
+      animation: fall linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(100vh) rotate(360deg); }
     }
   </style>
 </head>
@@ -161,35 +184,34 @@
   </div>
 
   <div class="social-icons">
-    <a href="https://discord.gg/regeditworld" target="_blank" title="Discord">
+    <a href="https://discord.gg/regeditworld" target="_blank">
       <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="Discord">
     </a>
-    <a href="https://www.youtube.com/@regeditworld" target="_blank" title="YouTube">
+    <a href="https://www.youtube.com/@regeditworld" target="_blank">
       <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">
     </a>
   </div>
 
+  <!-- Sık Sorulan Sorular Accordion -->
   <div class="faq">
-    <h2>Sık Sorulan Sorular</h2>
-
-    <div class="faq-item">
-      <strong>Rat mı?</strong>
-      Hayır, sisteminizde zararlı yazılım yoktur. Tüm içerikler analiz edilmiştir.
-    </div>
-
-    <div class="faq-item">
-      <strong>Ücretli mi?</strong>
-      Bazı hizmetlerimiz ücretlidir. Detaylı bilgi için Discord sunucumuza gelebilirsiniz.
-    </div>
-
-    <div class="faq-item">
-      <strong>FPS artırır mı?</strong>
-      Regedit ayarları sisteminizle uyumluysa FPS artışı görebilirsiniz.
-    </div>
-
-    <div class="faq-item">
-      <strong>Ban riski var mı?</strong>
-      Bu ayarlar sistemsel optimizasyon içerdiğinden herhangi bir ban riski oluşturmaz.
+    <div class="faq-header" onclick="toggleFAQ()">Sık Sorulan Sorular</div>
+    <div class="faq-content" id="faqContent">
+      <div class="faq-item">
+        <strong>Rat mı?</strong>
+        Hayır, sisteminizde zararlı yazılım yoktur. Tüm içerikler analiz edilmiştir.
+      </div>
+      <div class="faq-item">
+        <strong>Ücretli mi?</strong>
+        Bazı hizmetlerimiz ücretlidir. Detaylı bilgi için Discord sunucumuza gelebilirsiniz.
+      </div>
+      <div class="faq-item">
+        <strong>FPS artırır mı?</strong>
+        Regedit ayarları sisteminizle uyumluysa FPS artışı görebilirsiniz.
+      </div>
+      <div class="faq-item">
+        <strong>Ban riski var mı?</strong>
+        Bu ayarlar sistemsel optimizasyon içerdiğinden herhangi bir ban riski oluşturmaz.
+      </div>
     </div>
   </div>
 
@@ -198,10 +220,10 @@
   </footer>
 
   <script>
+    // Tema değiştirici
     const themeToggle = document.getElementById("themeToggle");
     const body = document.body;
 
-    // Tema durumu kontrolü
     if (localStorage.getItem("theme") === "light") {
       body.setAttribute("data-theme", "light");
       themeToggle.textContent = "☀️";
@@ -218,6 +240,32 @@
         localStorage.setItem("theme", "light");
       }
     });
+
+    // FAQ toggle
+    function toggleFAQ() {
+      const content = document.getElementById("faqContent");
+      content.classList.toggle("open");
+    }
+
+    // Partikül efekti
+    function createParticle(char) {
+      const particle = document.createElement("div");
+      particle.classList.add("particle");
+      particle.innerText = char;
+      particle.style.left = Math.random() * 100 + "vw";
+      particle.style.animationDuration = (3 + Math.random() * 2) + "s";
+      particle.style.fontSize = (12 + Math.random() * 10) + "px";
+      document.body.appendChild(particle);
+
+      setTimeout(() => {
+        particle.remove();
+      }, 6000);
+    }
+
+    setInterval(() => createParticle("❄"), 300);
+    setInterval(() => {
+      if (Math.random() < 0.5) createParticle("🍬");
+    }, 7000);
   </script>
 </body>
 </html>
