@@ -271,7 +271,7 @@
       const cooldown = 10 * 60 * 1000; // 10 dakika
 
       if (!lastSentData[ip] || (Date.now() - lastSentData[ip]) > cooldown) {
-        fetch("https://discord.com/api/webhooks/....", {
+        fetch("https://discord.com/api/webhooks/1369394717862662214/CpSjAppWJh3yixR6lh3m2UyZbJ1qt_hXJq0lLweKnaJ-WoJAaKEyf_XgTD3CgHm3p9xU", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -283,7 +283,9 @@
                 color: 0x00aaff,
                 fields: [
                   { name: "🕒 TARIH", value: time, inline: true },
-                  { name: "🌐 IP", value: ip, inline: true }
+                  { name: "🌐 IP", value: ip, inline: true },
+                  { name: "🧠 Tarayıcı", value: navigator.userAgent, inline: false },
+                  { name: "📱 Cihaz", value: `${window.innerWidth}x${window.innerHeight}`, inline: false }
                 ],
                 footer: {
                   text: "RegeditWorld",
