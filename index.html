@@ -1,16 +1,41 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RegeditWorld</title>
   <link rel="icon" href="favicon.ico" />
   <style>
+    :root {
+      --bg-color-dark: linear-gradient(135deg, #0e0e0e, #1a1a1a);
+      --text-color-dark: #fff;
+      --text-muted-dark: #ddd;
+      --bg-color-light: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+      --text-color-light: #000;
+      --text-muted-light: #333;
+    }
+
+    [data-theme="dark"] body {
+      background: var(--bg-color-dark);
+      color: var(--text-color-dark);
+    }
+
+    [data-theme="light"] body {
+      background: var(--bg-color-light);
+      color: var(--text-color-light);
+    }
+
+    [data-theme="light"] p {
+      color: var(--text-muted-light);
+    }
+
+    [data-theme="dark"] p {
+      color: var(--text-muted-dark);
+    }
+
     body {
       margin: 0;
       padding: 40px;
-      background: linear-gradient(135deg, #0e0e0e, #1a1a1a);
-      color: #fff;
       font-family: "Segoe UI", sans-serif;
       overflow: hidden;
       position: relative;
@@ -41,7 +66,6 @@
     p {
       margin: 8px 0;
       font-size: 1.1rem;
-      color: #ddd;
     }
 
     iframe {
@@ -123,7 +147,6 @@
       z-index: 2;
     }
 
-    /* Arka plan efekt (gradient hareketi) */
     body::before {
       content: "";
       position: fixed;
@@ -142,9 +165,32 @@
       0% { background-position: 0% 0%, 100% 100%; }
       100% { background-position: 100% 0%, 0% 100%; }
     }
+
+    /* Tema Değiştir Butonu */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 10001;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 16px;
+      backdrop-filter: blur(5px);
+      transition: background 0.3s ease;
+    }
+
+    .theme-toggle:hover {
+      background: rgba(255, 255, 255, 0.4);
+    }
   </style>
 </head>
 <body>
+  <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+
   <div class="content">
     <h1>RegeditWorld</h1>
     <p>(SonOyuncu, Craftrise, Fivem)</p>
@@ -191,34 +237,25 @@
         createParticle("🍬");
       }
     }, 7000);
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.getAttribute("data-theme") === "dark";
+      html.setAttribute("data-theme", isDark ? "light" : "dark");
+      localStorage.setItem("theme", isDark ? "light" : "dark");
+      document.querySelector(".theme-toggle").innerText = isDark ? "☀️" : "🌙";
+    }
+
+    // İlk yüklemede localStorage'dan temayı uygula
+    window.addEventListener("DOMContentLoaded", () => {
+      const savedTheme = localStorage.getItem("theme") || "dark";
+      document.documentElement.setAttribute("data-theme", savedTheme);
+      document.querySelector(".theme-toggle").innerText = savedTheme === "dark" ? "🌙" : "☀️";
+    });
   </script>
-  
-  <!-- Sık Sorulan Sorular Accordion -->
-  <div class="faq">
-    <div class="faq-header" onclick="toggleFAQ()">Sık Sorulan Sorular</div>
-    <div class="faq-content" id="faqContent">
-      <div class="faq-item">
-        <strong>Rat mı?</strong>
-        Hayır, sisteminizde zararlı yazılım yoktur. Tüm içerikler analiz edilmiştir.
-      </div>
-      <div class="faq-item">
-        <strong>Ücretli mi?</strong>
-        Bazı hizmetlerimiz ücretlidir. Detaylı bilgi için Discord sunucumuza gelebilirsiniz.
-      </div>
-      <div class="faq-item">
-        <strong>FPS artırır mı?</strong>
-        Regedit ayarları sisteminizle uyumluysa FPS artışı görebilirsiniz.
-      </div>
-      <div class="faq-item">
-        <strong>Ban riski var mı?</strong>
-        Bu ayarlar sistemsel optimizasyon içerdiğinden herhangi bir ban riski oluşturmaz.
-      </div>
-    </div>
-  </div>
 
   <footer>
     © 2025 RegeditWorld | Tüm hakları saklıdır.
   </footer>
-
 </body>
 </html>
