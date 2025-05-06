@@ -4,23 +4,34 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RegeditWorld</title>
-  <link rel="icon" href="favicon.ico" />
   <style>
+    :root {
+      --bg-color: #0e0e0e;
+      --text-color: #fff;
+      --accent: #66ccff;
+      --secondary-text: #ddd;
+    }
+
+    [data-theme="light"] {
+      --bg-color: #f0f0f0;
+      --text-color: #111;
+      --accent: #0066cc;
+      --secondary-text: #444;
+    }
+
     body {
       margin: 0;
       padding: 40px;
-      background: linear-gradient(135deg, #0e0e0e, #1a1a1a);
-      color: #fff;
+      background: var(--bg-color);
+      color: var(--text-color);
       font-family: "Segoe UI", sans-serif;
-      overflow: hidden;
-      position: relative;
+      overflow-x: hidden;
+      transition: background 0.5s, color 0.5s;
     }
 
     .content {
       max-width: 700px;
-      text-align: left;
-      position: relative;
-      z-index: 2;
+      margin-bottom: 60px;
     }
 
     h1 {
@@ -31,23 +42,22 @@
     }
 
     @keyframes rgb {
-      0%   { color: #ff0055; }
-      25%  { color: #00ffaa; }
-      50%  { color: #4488ff; }
-      75%  { color: #ffff00; }
+      0% { color: #ff0055; }
+      25% { color: #00ffaa; }
+      50% { color: #4488ff; }
+      75% { color: #ffff00; }
       100% { color: #ff0055; }
     }
 
     p {
       margin: 8px 0;
       font-size: 1.1rem;
-      color: #ddd;
+      color: var(--secondary-text);
     }
 
     iframe {
       margin: 15px 0;
       border-radius: 10px;
-      box-shadow: 0 0 15px rgba(102, 204, 255, 0.2);
     }
 
     .download {
@@ -57,7 +67,7 @@
     .download a {
       display: inline-block;
       padding: 10px 20px;
-      background: #66ccff;
+      background: var(--accent);
       color: #000;
       text-decoration: none;
       border-radius: 8px;
@@ -70,20 +80,16 @@
       transform: scale(1.05);
     }
 
-    .particle {
+    .theme-toggle {
       position: fixed;
-      top: -10px;
-      font-size: 20px;
-      user-select: none;
-      pointer-events: none;
-      z-index: 1000;
-      animation: fall linear infinite;
-      opacity: 0.8;
-    }
-
-    @keyframes fall {
-      0% { transform: translateY(0) rotate(0deg); }
-      100% { transform: translateY(100vh) rotate(360deg); }
+      top: 20px;
+      right: 20px;
+      z-index: 10000;
+      font-size: 24px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-color);
     }
 
     .social-icons {
@@ -107,44 +113,39 @@
       transform: scale(1.1);
     }
 
-    .social-icons a[title]::after {
-      content: attr(title);
-      display: none;
+    .faq {
+      margin-top: 60px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    .faq h2 {
+      font-size: 1.8rem;
+      margin-bottom: 16px;
+    }
+
+    .faq-item {
+      margin-bottom: 15px;
+    }
+
+    .faq-item strong {
+      display: block;
+      font-size: 1.1rem;
+      color: var(--accent);
     }
 
     footer {
-      position: fixed;
-      bottom: 10px;
-      left: 0;
-      width: 100%;
       text-align: center;
-      font-size: 0.9rem;
+      margin-top: 30px;
       color: #666;
-      z-index: 2;
-    }
-
-    /* Arka plan efekt (gradient hareketi) */
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: radial-gradient(circle at 20% 20%, #222 0%, transparent 60%),
-                  radial-gradient(circle at 80% 80%, #333 0%, transparent 60%);
-      animation: bgmove 20s ease-in-out infinite alternate;
-      z-index: 0;
-      opacity: 0.3;
-    }
-
-    @keyframes bgmove {
-      0% { background-position: 0% 0%, 100% 100%; }
-      100% { background-position: 100% 0%, 0% 100%; }
+      font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
+  <button class="theme-toggle" id="themeToggle">🌙</button>
+
   <div class="content">
     <h1>RegeditWorld</h1>
     <p>(SonOyuncu, Craftrise, Fivem)</p>
@@ -159,42 +160,64 @@
     </div>
   </div>
 
-  <!-- Sosyal Medya İkonları -->
   <div class="social-icons">
-    <a href="https://discord.gg/regeditworld" target="_blank" title="Discord Sunucusu">
+    <a href="https://discord.gg/regeditworld" target="_blank" title="Discord">
       <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="Discord">
     </a>
-    <a href="https://www.youtube.com/@regeditworld" target="_blank" title="YouTube Kanalı">
+    <a href="https://www.youtube.com/@regeditworld" target="_blank" title="YouTube">
       <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">
     </a>
   </div>
 
-  <!-- Partikül Efektleri -->
-  <script>
-    function createParticle(char) {
-      const particle = document.createElement("div");
-      particle.classList.add("particle");
-      particle.innerText = char;
-      particle.style.left = Math.random() * 100 + "vw";
-      particle.style.animationDuration = (3 + Math.random() * 2) + "s";
-      particle.style.fontSize = (12 + Math.random() * 10) + "px";
-      document.body.appendChild(particle);
+  <div class="faq">
+    <h2>Sık Sorulan Sorular</h2>
 
-      setTimeout(() => {
-        particle.remove();
-      }, 6000);
-    }
+    <div class="faq-item">
+      <strong>Rat mı?</strong>
+      Hayır, sisteminizde zararlı yazılım yoktur. Tüm içerikler analiz edilmiştir.
+    </div>
 
-    setInterval(() => createParticle("❄"), 300);
-    setInterval(() => {
-      if (Math.random() < 0.5) {
-        createParticle("🍬");
-      }
-    }, 7000);
-  </script>
+    <div class="faq-item">
+      <strong>Ücretli mi?</strong>
+      Bazı hizmetlerimiz ücretlidir. Detaylı bilgi için Discord sunucumuza gelebilirsiniz.
+    </div>
+
+    <div class="faq-item">
+      <strong>FPS artırır mı?</strong>
+      Regedit ayarları sisteminizle uyumluysa FPS artışı görebilirsiniz.
+    </div>
+
+    <div class="faq-item">
+      <strong>Ban riski var mı?</strong>
+      Bu ayarlar sistemsel optimizasyon içerdiğinden herhangi bir ban riski oluşturmaz.
+    </div>
+  </div>
 
   <footer>
     © 2025 RegeditWorld | Tüm hakları saklıdır.
   </footer>
+
+  <script>
+    const themeToggle = document.getElementById("themeToggle");
+    const body = document.body;
+
+    // Tema durumu kontrolü
+    if (localStorage.getItem("theme") === "light") {
+      body.setAttribute("data-theme", "light");
+      themeToggle.textContent = "☀️";
+    }
+
+    themeToggle.addEventListener("click", () => {
+      if (body.getAttribute("data-theme") === "light") {
+        body.removeAttribute("data-theme");
+        themeToggle.textContent = "🌙";
+        localStorage.setItem("theme", "dark");
+      } else {
+        body.setAttribute("data-theme", "light");
+        themeToggle.textContent = "☀️";
+        localStorage.setItem("theme", "light");
+      }
+    });
+  </script>
 </body>
 </html>
