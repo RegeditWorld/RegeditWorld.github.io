@@ -61,12 +61,29 @@
     }
 
     @keyframes fall {
-      0% {
-        transform: translateY(0) rotate(0deg);
-      }
-      100% {
-        transform: translateY(100vh) rotate(360deg);
-      }
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(100vh) rotate(360deg); }
+    }
+
+    .social-icons {
+      position: fixed;
+      top: 50%;
+      right: 20px;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      z-index: 9999;
+    }
+
+    .social-icons a img {
+      width: 40px;
+      height: 40px;
+      transition: transform 0.2s ease;
+    }
+
+    .social-icons a:hover img {
+      transform: scale(1.1);
     }
   </style>
 </head>
@@ -75,7 +92,7 @@
     <h1>RegeditWorld *</h1>
     <p>(sonoyuncu, craftrise [undetected])</p>
 
-    <iframe width="560" height="315" src="https://www.youtube.com/watch?v=_6UXDRf43_w&t=12s&ab_channel=FqsElcirot" 
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/YOUTUBE_VIDEO_ID" 
       title="YouTube video player" frameborder="0" allowfullscreen></iframe>
 
     <div class="download">
@@ -85,6 +102,17 @@
     <p>Bu sitede paylaşılanlar eğitim amaçlıdır. Regedit ayarları hakkında detaylı bilgi ve performans artışı için içeriklerimize göz at.</p>
   </div>
 
+  <!-- Sosyal Medya İkonları -->
+  <div class="social-icons">
+    <a href="https://discord.gg/örnek" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="Discord">
+    </a>
+    <a href="https://youtube.com/@kanaliniz" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">
+    </a>
+  </div>
+
+  <!-- Partikül Efektleri -->
   <script>
     function createParticle(char) {
       const particle = document.createElement("div");
@@ -100,10 +128,10 @@
       }, 6000);
     }
 
-    // Kar tanesi sürekli düşüyor
+    // Kar taneleri sürekli
     setInterval(() => createParticle("❄"), 300);
 
-    // Şeker emojisi ara sıra düşsün (her 5-10 saniyede bir)
+    // Ara sıra şeker
     setInterval(() => {
       if (Math.random() < 0.5) {
         createParticle("🍬");
