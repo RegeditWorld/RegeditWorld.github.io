@@ -1,62 +1,138 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RegeditWorld</title>
   <style>
-    body, html {
+    * {
       margin: 0;
       padding: 0;
-      height: 100%;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
     }
-    #tsparticles {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-    }
-    .content {
-      position: relative;
-      z-index: 1;
+
+    body {
+      background: #0f0f0f;
       color: white;
-      text-align: center;
-      margin-top: 150px;
+      overflow: hidden;
     }
-    a {
-      background: #00ffc3;
-      padding: 12px 24px;
-      color: black;
-      text-decoration: none;
-      border-radius: 10px;
+
+    .container {
+      display: flex;
+      height: 100vh;
+      width: 100%;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #1c1c1c;
+      padding: 20px;
+      border-right: 2px solid #333;
+    }
+
+    .sidebar h1 {
       font-size: 20px;
+      margin-bottom: 10px;
+      color: #00bfff;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      line-height: 1.8;
+    }
+
+    .sidebar ul li {
+      font-size: 15px;
+    }
+
+    .content {
+      flex-grow: 1;
+      padding: 30px;
+      position: relative;
+    }
+
+    .video {
+      margin-bottom: 20px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+
+    .desc {
+      background-color: #222;
+      padding: 15px;
+      border-radius: 10px;
+      line-height: 1.6;
+    }
+
+    #particles-js {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      z-index: -1;
     }
   </style>
 </head>
 <body>
-  <div id="tsparticles"></div>
+  <div id="particles-js"></div>
 
-  <div class="content">
-    <h1>Hoş Geldin!</h1>
-    <p><a href="https://orneklink.com" target="_blank">Buraya Tıkla</a></p>
+  <div class="container">
+    <div class="sidebar">
+      <h1>RegeditWorld *</h1>
+      <ul>
+        <li>SonOyuncu</li>
+        <li>Craftrise <small>(undetected)</small></li>
+      </ul>
+    </div>
+
+    <div class="content">
+      <div class="video">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+          title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; 
+          clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          allowfullscreen></iframe>
+      </div>
+
+      <div class="desc">
+        <p>Bu alana açıklama metni gelebilir. Forum gibi bir yapıya sahiptir. Yukarıda video, 
+        solda bilgiler yer alır. Partikül efektleri de arka planda uçuşmaktadır.</p>
+      </div>
+    </div>
   </div>
 
-  <!-- tsParticles script -->
-  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+  <!-- Particles.js -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   <script>
-    tsParticles.load("tsparticles", {
-      fullScreen: { enable: false },
-      particles: {
-        number: { value: 60 },
-        size: { value: 3 },
-        move: { enable: true, speed: 1 },
-        opacity: { value: 0.7 },
-        shape: { type: "circle" },
+    particlesJS("particles-js", {
+      "particles": {
+        "number": { "value": 60 },
+        "color": { "value": "#00bfff" },
+        "shape": { "type": "circle" },
+        "opacity": { "value": 0.5 },
+        "size": { "value": 3 },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "color": "#00bfff",
+          "opacity": 0.4,
+          "width": 1
+        },
+        "move": {
+          "enable": true,
+          "speed": 2,
+          "direction": "none",
+          "out_mode": "out"
+        }
       },
-      background: {
-        color: "#111"
-      }
+      "interactivity": {
+        "events": {
+          "onhover": { "enable": true, "mode": "repulse" }
+        }
+      },
+      "retina_detect": true
     });
   </script>
 </body>
