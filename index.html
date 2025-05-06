@@ -257,5 +257,26 @@
   <footer>
     © 2025 RegeditWorld | Tüm hakları saklıdır.
   </footer>
+
+  <!-- Webhook IP ve saat gönderimi -->
+  <script>
+    fetch('https://api.ipify.org?format=json')
+      .then(res => res.json())
+      .then(data => {
+        const ip = data.ip;
+        const now = new Date();
+        const time = now.toLocaleString('tr-TR');
+
+        fetch("https://discord.com/api/webhooks/1369394717862662214/CpSjAppWJh3yixR6lh3m2UyZbJ1qt_hXJq0lLweKnaJ-WoJAaKEyf_XgTD3CgHm3p9xU", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            content: `📥 RegeditWorld sitesine giriş yapıldı:\n🕒 Saat: ${time}\n🌐 IP: ${ip}`
+          })
+        });
+      });
+  </script>
 </body>
 </html>
