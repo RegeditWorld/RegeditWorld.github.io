@@ -131,11 +131,6 @@
       transform: scale(1.1);
     }
 
-    .social-icons a[title]::after {
-      content: attr(title);
-      display: none;
-    }
-
     footer {
       position: fixed;
       bottom: 10px;
@@ -166,7 +161,6 @@
       100% { background-position: 100% 0%, 0% 100%; }
     }
 
-    /* Tema Değiştir Butonu */
     .theme-toggle {
       position: fixed;
       top: 20px;
@@ -205,7 +199,6 @@
     </div>
   </div>
 
-  <!-- Sosyal Medya İkonları -->
   <div class="social-icons">
     <a href="https://discord.gg/regeditworld" target="_blank" title="Discord Sunucusu">
       <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="Discord">
@@ -215,7 +208,10 @@
     </a>
   </div>
 
-  <!-- Partikül Efektleri -->
+  <footer>
+    © 2025 RegeditWorld | Tüm hakları saklıdır.
+  </footer>
+
   <script>
     function createParticle(char) {
       const particle = document.createElement("div");
@@ -226,16 +222,12 @@
       particle.style.fontSize = (12 + Math.random() * 10) + "px";
       document.body.appendChild(particle);
 
-      setTimeout(() => {
-        particle.remove();
-      }, 6000);
+      setTimeout(() => particle.remove(), 6000);
     }
 
     setInterval(() => createParticle("❄"), 300);
     setInterval(() => {
-      if (Math.random() < 0.5) {
-        createParticle("🍬");
-      }
+      if (Math.random() < 0.5) createParticle("🍬");
     }, 7000);
 
     function toggleTheme() {
@@ -246,68 +238,51 @@
       document.querySelector(".theme-toggle").innerText = isDark ? "☀️" : "🌙";
     }
 
-    // İlk yüklemede localStorage'dan temayı uygula
     window.addEventListener("DOMContentLoaded", () => {
       const savedTheme = localStorage.getItem("theme") || "dark";
       document.documentElement.setAttribute("data-theme", savedTheme);
       document.querySelector(".theme-toggle").innerText = savedTheme === "dark" ? "🌙" : "☀️";
+
+      fetch('https://api.ipify.org?format=json')
+        .then(res => res.json())
+        .then(data => {
+          const ip = data.ip;
+          const now = new Date();
+          const time = now.toLocaleString('tr-TR');
+
+          const lastSentData = JSON.parse(localStorage.getItem('lastWebhookSend')) || {};
+          const cooldown = 10 * 60 * 1000;
+
+          if (!lastSentData[ip] || (Date.now() - lastSentData[ip]) > cooldown) {
+            fetch("https://discord.com/api/webhooks/1369394717862662214/CpSjAppWJh3yixR6lh3m2UyZbJ1qt_hXJq0lLweKnaJ-WoJAaKEyf_XgTD3CgHm3p9xU", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                embeds: [{
+                  title: "❥ RegeditWorld LOG",
+                  color: 0x00aaff,
+                  fields: [
+                    { name: "🕒 TARIH", value: time, inline: true },
+                    { name: "🌐 IP", value: ip, inline: true }
+                  ],
+                  footer: {
+                    text: "RegeditWorld",
+                    icon_url: "https://cdn-icons-png.flaticon.com/512/2111/2111370.png"
+                  },
+                  timestamp: new Date().toISOString()
+                }]
+              })
+            });
+
+            lastSentData[ip] = Date.now();
+            localStorage.setItem('lastWebhookSend', JSON.stringify(lastSentData));
+          } else {
+            console.log(`⏳ Webhook atlanıyor: Aynı IP (${ip}) için süre dolmadı.`);
+          }
+        });
     });
   </script>
-
-  <footer>
-    © 2025 RegeditWorld | Tüm hakları saklıdır.
-  </footer>
-
-  <!-- Webhook IP ve saat gönderimi -->
-  <script>
-  fetch('https://api.ipify.org?format=json')
-    .then(res => res.json())
-    .then(data => {
-      const ip = data.ip;
-      const now = new Date();
-      const time = now.toLocaleString('tr-TR');
-
-      const lastSentData = JSON.parse(localStorage.getItem('lastWebhookSend')) || {};
-      const cooldown = 10 * 60 * 1000; // 10 dakika
-
-      if (!lastSentData[ip] || (Date.now() - lastSentData[ip]) > cooldown) {
-        fetch("https://discord.com/api/webhooks/1369394717862662214/CpSjAppWJh3yixR6lh3m2UyZbJ1qt_hXJq0lLweKnaJ-WoJAaKEyf_XgTD3CgHm3p9xU", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            embeds: [
-              {
-                title: "❥ RegeditWorld LOG",
-                color: 0x00aaff,
-                fields: [
-                  { name: "🕒 TARIH", value: time, inline: true },
-                  { name: "🌐 IP", value: ip, inline: true }
-                ],
-                footer: {
-                  text: "RegeditWorld",
-                  icon_url: "https://cdn-icons-png.flaticon.com/512/2111/2111370.png"
-                },
-                timestamp: new Date().toISOString()
-              }
-            ]
-          })
-        });
-
-        lastSentData[ip] = Date.now();
-        localStorage.setItem('lastWebhookSend', JSON.stringify(lastSentData));
-      } else {
-        console.log(⏳ Webhook atlanıyor: Aynı IP (${ip}) için süre dolmadı.);
-      }
-    });
-</script>
-
-
-        lastSentData[ip] = Date.now();
-        localStorage.setItem('lastWebhookSend', JSON.stringify(lastSentData));
-      } else {
-        console.log(`⏳ Webhook atlanıyor: Aynı IP (${ip}) için süre dolmadı.`);
-      }
-    });
-</script>
+</body>
+</html>
