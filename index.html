@@ -4,14 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RegeditWorld</title>
+  <link rel="icon" href="favicon.ico" />
   <style>
     body {
       margin: 0;
       padding: 40px;
-      background: #0e0e0e;
+      background: linear-gradient(135deg, #0e0e0e, #1a1a1a);
       color: #fff;
       font-family: "Segoe UI", sans-serif;
       overflow: hidden;
+      backdrop-filter: blur(2px);
     }
 
     .content {
@@ -21,7 +23,16 @@
 
     h1 {
       font-size: 2.5rem;
-      color: #66ccff;
+      animation: rgb 4s linear infinite;
+      font-weight: bold;
+    }
+
+    @keyframes rgb {
+      0% { color: #ff0055; }
+      25% { color: #00ffaa; }
+      50% { color: #4488ff; }
+      75% { color: #ffff00; }
+      100% { color: #ff0055; }
     }
 
     p {
@@ -33,6 +44,7 @@
     iframe {
       margin: 15px 0;
       border-radius: 10px;
+      box-shadow: 0 0 15px rgba(102, 204, 255, 0.2);
     }
 
     .download {
@@ -41,12 +53,20 @@
 
     .download a {
       display: inline-block;
-      padding: 8px 16px;
+      padding: 10px 20px;
       background: #66ccff;
       color: #000;
       text-decoration: none;
-      border-radius: 6px;
+      border-radius: 8px;
       margin-top: 8px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .download a:hover {
+      background: #00ffaa;
+      color: #000;
+      transform: scale(1.05);
     }
 
     .particle {
@@ -85,12 +105,22 @@
     .social-icons a:hover img {
       transform: scale(1.1);
     }
+
+    footer {
+      position: fixed;
+      bottom: 10px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+    }
   </style>
 </head>
 <body>
   <div class="content">
     <h1>RegeditWorld</h1>
-    <p>(SonOyuncu,Craftrise,Fivem)</p>
+    <p>(SonOyuncu, Craftrise, Fivem)</p>
 
     <iframe width="560" height="315" src="https://www.youtube.com/embed/_6UXDRf43_w?start=13" 
       title="YouTube video player" frameborder="0" allowfullscreen></iframe>
@@ -128,15 +158,16 @@
       }, 6000);
     }
 
-    // Kar taneleri sürekli
     setInterval(() => createParticle("❄"), 300);
-
-    // Ara sıra şeker
     setInterval(() => {
       if (Math.random() < 0.5) {
         createParticle("🍬");
       }
     }, 7000);
   </script>
+
+  <footer>
+    © 2025 RegeditWorld | Tüm hakları saklıdır.
+  </footer>
 </body>
 </html>
