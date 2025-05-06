@@ -7,17 +7,16 @@
   <style>
     body {
       margin: 0;
-      padding: 0;
+      padding: 40px;
       background: #0e0e0e;
       color: #fff;
       font-family: "Segoe UI", sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      flex-direction: column;
-      text-align: center;
       overflow: hidden;
+    }
+
+    .content {
+      max-width: 700px;
+      text-align: left;
     }
 
     h1 {
@@ -26,7 +25,7 @@
     }
 
     p {
-      margin: 5px 0;
+      margin: 8px 0;
       font-size: 1.1rem;
       color: #ddd;
     }
@@ -36,11 +35,26 @@
       border-radius: 10px;
     }
 
-    .snowflake {
+    .download {
+      margin-top: 10px;
+    }
+
+    .download a {
+      display: inline-block;
+      padding: 8px 16px;
+      background: #66ccff;
+      color: #000;
+      text-decoration: none;
+      border-radius: 6px;
+      margin-top: 8px;
+    }
+
+    .particle {
       position: fixed;
       top: -10px;
-      color: #fff;
+      font-size: 20px;
       user-select: none;
+      pointer-events: none;
       z-index: 1000;
       animation: fall linear infinite;
       opacity: 0.8;
@@ -57,33 +71,44 @@
   </style>
 </head>
 <body>
-  <h1>RegeditWorld *</h1>
-  <p>(sonoyuncu, craftrise [undetected])</p>
+  <div class="content">
+    <h1>RegeditWorld *</h1>
+    <p>(sonoyuncu, craftrise [undetected])</p>
 
-  <iframe width="560" height="315" 
-    src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
-    title="YouTube video player" frameborder="0" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/YOUTUBE_VIDEO_ID" 
+      title="YouTube video player" frameborder="0" allowfullscreen></iframe>
 
-  <p>En iyi performans için özel geliştirilmiş client. Her sürümde stabil çalışır.</p>
+    <div class="download">
+      <a href="https://example.com/download.zip" target="_blank">📥 İndir</a>
+    </div>
+
+    <p>Bu sitede paylaşılanlar eğitim amaçlıdır. Regedit ayarları hakkında detaylı bilgi ve performans artışı için içeriklerimize göz at.</p>
+  </div>
 
   <script>
-    function createSnowflake() {
-      const snowflake = document.createElement("div");
-      snowflake.classList.add("snowflake");
-      snowflake.style.left = Math.random() * window.innerWidth + "px";
-      snowflake.style.fontSize = Math.random() * 10 + 10 + "px";
-      snowflake.textContent = "❄";
-      snowflake.style.animationDuration = (Math.random() * 5 + 5) + "s";
-      document.body.appendChild(snowflake);
+    function createParticle(char) {
+      const particle = document.createElement("div");
+      particle.classList.add("particle");
+      particle.innerText = char;
+      particle.style.left = Math.random() * 100 + "vw";
+      particle.style.animationDuration = (3 + Math.random() * 2) + "s";
+      particle.style.fontSize = (12 + Math.random() * 10) + "px";
+      document.body.appendChild(particle);
 
       setTimeout(() => {
-        snowflake.remove();
-      }, 10000);
+        particle.remove();
+      }, 6000);
     }
 
-    setInterval(createSnowflake, 200); // her 200ms'de 1 tane düşsün
+    // Kar tanesi sürekli düşüyor
+    setInterval(() => createParticle("❄"), 300);
+
+    // Şeker emojisi ara sıra düşsün (her 5-10 saniyede bir)
+    setInterval(() => {
+      if (Math.random() < 0.5) {
+        createParticle("🍬");
+      }
+    }, 7000);
   </script>
 </body>
 </html>
