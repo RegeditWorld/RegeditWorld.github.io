@@ -213,7 +213,7 @@
     © 2025 RegeditWorld | Tüm hakları saklıdır.
   </footer>
 
-    <script>
+  <script>
     function createParticle(char) {
       const particle = document.createElement("div");
       particle.classList.add("particle");
@@ -242,64 +242,58 @@
     window.addEventListener("DOMContentLoaded", () => {
       const savedTheme = localStorage.getItem("theme") || "dark";
       document.documentElement.setAttribute("data-theme", savedTheme);
-      document.querySelector(".theme-toggle").innerText = savedTheme === "dark" ? "🌙" : "☀️";
+      document.querySelector(".theme-toggle").innerText = savedTheme === "dark" ? "🌙" : "
+  fetch('https://api.ipify.org?format=json')
+    .then(res => res.json())
+    .then(data => {
+      const ip = data.ip;
+      const now = new Date();
+      const time = now.toLocaleString('tr-TR');
 
-      fetch('https://api.ipify.org?format=json')
-        .then(res => res.json())
-        .then(data => {
-          const ip = data.ip;
-          const now = new Date();
-          const time = now.toLocaleString('tr-TR');
+      const lastSentData = JSON.parse(localStorage.getItem('lastWebhookSend')) || {};
+      const cooldown = 10 * 60 * 1000;
 
-          const lastSentData = JSON.parse(localStorage.getItem('lastWebhookSend')) || {};
-          const cooldown = 10 * 60 * 1000;
-
-          if (!lastSentData[ip] || (Date.now() - lastSentData[ip]) > cooldown) {
-            fetch("https://discord.com/api/webhooks/1369394717862662214/CpSjAppWJh3yixR6lh3m2UyZbJ1qt_hXJq0lLweKnaJ-WoJAaKEyf_XgTD3CgHm3p9xU", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json"
+      if (!lastSentData[ip] || (Date.now() - lastSentData[ip]) > cooldown) {
+        fetch("https://discord.com/api/webhooks/1369394717862662214/CpSjAppWJh3yixR6lh3m2UyZbJ1qt_hXJq0lLweKnaJ-WoJAaKEyf_XgTD3CgHm3p9xU", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            embeds: [{
+              title: "❥ RegeditWorld LOG",
+              color: 0x00aaff,
+              fields: [
+                { name: "🕒 TARIH", value: time, inline: true },
+                { name: "🌐 IP", value: ip, inline: true }
+              ],
+              footer: {
+                text: "RegeditWorld",
+                icon_url: "https://cdn-icons-png.flaticon.com/512/2111/2111370.png"
               },
-              body: JSON.stringify({
-                embeds: [{
-                  title: "❥ RegeditWorld LOG",
-                  color: 0x00aaff,
-                  fields: [
-                    { name: "🕒 TARIH", value: time, inline: true },
-                    { name: "🌐 IP", value: ip, inline: true }
-                  ],
-                  footer: {
-                    text: "RegeditWorld",
-                    icon_url: "https://cdn-icons-png.flaticon.com/512/2111/2111370.png"
-                  },
-                  timestamp: new Date().toISOString()
-                }]
-              })
-            });
-
-            lastSentData[ip] = Date.now();
-            localStorage.setItem('lastWebhookSend', JSON.stringify(lastSentData));
-          } else {
-            console.log(`⏳ Siteye daha önce girilmiş: IP (${ip}) için süre dolmadı.`);
-          }
+              timestamp: new Date().toISOString()
+            }]
+          })
         });
-    });
 
-    // 🚫 F12, Ctrl+Shift+I, Ctrl+U, sağ tık engelleme
-    document.addEventListener("contextmenu", e => e.preventDefault());
-    document.addEventListener("keydown", function(e) {
-      if (
-        e.key === "F12" ||
-        (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J")) ||
-        (e.ctrlKey && e.key === "U")
-      ) {
-        e.preventDefault();
-        return false;
+        lastSentData[ip] = Date.now();
+        localStorage.setItem('lastWebhookSend', JSON.stringify(lastSentData));
+      } else {
+        console.log(`⏳ Siteye daha önce girilmiş: IP (${ip}) için süre dolmadı.`);
       }
     });
-  </script>
-</body>
-</html>
+});
 
-</body>
-</html>
+// 🚫 F12, Ctrl+Shift+I, Ctrl+U, sağ tık engelleme
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("keydown", function(e) {
+  if (
+    e.key === "F12" ||
+    (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J")) ||
+    (e.ctrlKey && e.key === "U")
+  ) {
+    e.preventDefault();
+    return false;
+  }
+});
+
