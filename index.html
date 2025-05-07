@@ -213,7 +213,7 @@
     © 2025 RegeditWorld | Tüm hakları saklıdır.
   </footer>
 
-  <script>
+    <script>
     function createParticle(char) {
       const particle = document.createElement("div");
       particle.classList.add("particle");
@@ -284,6 +284,22 @@
           }
         });
     });
+
+    // 🚫 F12, Ctrl+Shift+I, Ctrl+U, sağ tık engelleme
+    document.addEventListener("contextmenu", e => e.preventDefault());
+    document.addEventListener("keydown", function(e) {
+      if (
+        e.key === "F12" ||
+        (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J")) ||
+        (e.ctrlKey && e.key === "U")
+      ) {
+        e.preventDefault();
+        return false;
+      }
+    });
   </script>
+</body>
+</html>
+
 </body>
 </html>
