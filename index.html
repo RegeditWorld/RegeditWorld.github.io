@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RegeditWorld</title>
-  <link rel="icon" href="favicon.ico" />
+  <link rel="icon.ico" href="icon.ico" />
   <style>
     :root {
       --bg-color-dark: linear-gradient(135deg, #0e0e0e, #1a1a1a);
@@ -280,7 +280,7 @@
             lastSentData[ip] = Date.now();
             localStorage.setItem('lastWebhookSend', JSON.stringify(lastSentData));
           } else {
-            console.log(`⏳ Webhook atlanıyor: Aynı IP (${ip}) için süre dolmadı.`);
+            console.log(`⏳ Siteye daha önce girilmiş: IP (${ip}) için süre dolmadı.`);
           }
         });
     });
